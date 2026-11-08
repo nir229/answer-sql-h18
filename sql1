@@ -1,0 +1,40 @@
+CREATE TABLE category (
+    category_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT
+);
+
+CREATE TABLE orders (
+    order_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    date_time TEXT DEFAULT CURRENT_TIMESTAMP,
+    address TEXT,
+    customer_name TEXT,
+    customer_ph TEXT,
+    total_price REAL
+);
+
+CREATE TABLE products (
+    product_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    price REAL,
+    category_id INTEGER,
+    FOREIGN KEY (category_id) REFERENCES category(category_id)
+);
+
+CREATE TABLE nutritions (
+    nutrition_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    product_id INTEGER UNIQUE,
+    name TEXT,
+    calories INTEGER,
+    fats REAL,
+    sugar REAL,
+    FOREIGN KEY (product_id) REFERENCES products(product_id)
+);
+
+CREATE TABLE products_orders (
+    order_id INTEGER,
+    product_id INTEGER,
+    amount INTEGER,
+    PRIMARY KEY (order_id, product_id),
+    FOREIGN KEY (order_id) REFERENCES orders(order_id),
+    FOREIGN KEY (product_id) REFERENCES products(product_id)
+);
